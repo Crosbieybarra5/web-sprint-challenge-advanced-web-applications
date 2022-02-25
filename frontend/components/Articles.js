@@ -4,24 +4,15 @@ import PT from 'prop-types'
 
 export default function Articles(props) {
   // ✨ where are my props? Destructure them here
-  const { articles, getArticles, deleteArticle, setCurrentArticleId} = props;
-
-  console.log('articles inside of Articles.js: ', articles);
-
+  const { articles, getArticles, deleteArticle, setCurrentArticleId, currentArticleId } = props
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
-  if(!localStorage.getItem('token')){
-    return <Navigate to='/' />
-  }
 
   useEffect(() => {
     // ✨ grab the articles here, on first render only
-    getArticles();
+    getArticles()
+    setCurrentArticleId(null)
   }, [])
-
-  const handleClick = e => {
-    console.log('yeahhh');
-  }
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
@@ -40,8 +31,8 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button onClick={handleClick}>Edit</button>
-                  <button onClick={() => {deleteArticle(art.article_id)}}>Delete</button>
+                  <button onClick={evt => {setCurrentArticleId(art.id)}}>Edit</button>
+                  <button onClick={evt => {deleteArticle(art.id)}}>Delete</button>
                 </div>
               </div>
             )
@@ -50,6 +41,7 @@ export default function Articles(props) {
     </div>
   )
 }
+
 
 // 🔥 No touchy: Articles expects the following props exactly:
 Articles.propTypes = {
