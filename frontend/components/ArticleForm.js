@@ -6,7 +6,7 @@ const initialFormValues = { title: '', text: '', topic: '' }
 export default function ArticleForm(props) {
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
-  const { postArticle, updateArticle, setCurrentArticleId, currentArticleId, currentArticle} = props;
+  const { postArticle, updateArticle, currentArticleId, currentArticle} = props;
 
   useEffect(() => {
     // ✨ implement
@@ -28,10 +28,8 @@ export default function ArticleForm(props) {
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
     if(currentArticle){
-      console.log('INSIDE THE IF')
-      updateArticle(currentArticleId, values)
+     updateArticle(currentArticleId, values)
     }else{
-      console.log('INSIDE THE ELSE')
       postArticle(values)
     }
     setValues(initialFormValues)
@@ -74,7 +72,7 @@ export default function ArticleForm(props) {
       </select>
       <div className="button-group">
         <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button onClick={e => (setValues(initialFormValues))}>Cancel edit</button>
+        <button onClick={() => (setValues(initialFormValues))}>Cancel edit</button>
       </div>
     </form>
   )

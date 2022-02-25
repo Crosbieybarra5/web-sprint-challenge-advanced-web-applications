@@ -6,8 +6,6 @@ export default function Articles(props) {
   // ✨ where are my props? Destructure them here
   const { articles, getArticles, deleteArticle, setCurrentArticleId} = props;
 
-  console.log('articles inside of Articles.js: ', articles);
-
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
   if(!localStorage.getItem('token')){
