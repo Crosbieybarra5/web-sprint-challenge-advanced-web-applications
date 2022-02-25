@@ -105,6 +105,21 @@ export default function App() {
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
+    setMessage('')
+    console.log('Putting', article_id, article)
+
+    axiosWithAuth()
+      .put(`http://localhost:9000/api/articles/${article_id}`, article)
+      .then(resp => {
+        setMessage(resp.data.message)
+        setArticles(articles.map(article => article.article_id !== article_id ? article : resp.data.article))
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+      setCurrentArticleId()
+  }
   }
 
   const deleteArticle = article_id => {
@@ -135,8 +150,21 @@ export default function App() {
           <Route path="/" element={<LoginForm />} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
-              <Articles />
+              <ArticleForm 
+                article={articles.find((article) => {
+                  return article.article_id == currentArticleId
+                })}
+                updateArticle={updateArticle} 
+                postArticle={postArticle}
+                currentArticleId={currentArticleId}
+                />
+
+              <Articles 
+                getArticles={getArticles} 
+                articles={articles} 
+                deleteArticle={deleteArticle} 
+                setCurrentArticleId={setCurrentArticleId} 
+                />
             </>
           } />
         </Routes>
